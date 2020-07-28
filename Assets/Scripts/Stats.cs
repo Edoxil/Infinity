@@ -3,7 +3,7 @@ using UnityEngine;
 
 
 
-public class Stats : MonoBehaviour
+public class Stats :MonoBehaviour
 {
     public new string name;
     public int level = 1;
@@ -14,10 +14,10 @@ public class Stats : MonoBehaviour
     public int currentMP;
     public int maxMP;
     
+}
     
     
 
-}
     
     
 

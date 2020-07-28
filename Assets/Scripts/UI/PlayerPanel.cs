@@ -51,7 +51,7 @@ public class PlayerPanel : MonoBehaviour
    
 
   
-    public void OnTargetSelected()
+    public void OnSelfSelected()
     {
         Transform target = _playerStats.gameObject.transform;
         Messenger<Transform>.Broadcast(GameEvent.TARGET_SELECTED, target);

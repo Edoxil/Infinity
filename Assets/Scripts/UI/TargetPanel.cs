@@ -30,8 +30,8 @@ public class TargetPanel : MonoBehaviour
             _text.text = stats.name;
         }
         Open();
-       
     }
+       
 
 
 
