@@ -1,0 +1,23 @@
+{
+    "files.exclude": {
+        "**/*.cs.meta": true,
+        "**/*.meta": true,
+        "**/Fonts": true,
+        "**/Scenes": true,
+        "**/Textures": true,
+        "**/Library": true,
+        "**/Logs": true,
+        "**/obj": true,
+        "**/Materials": true,
+        "**/Fantasy**": true,
+        "**/Packages": true,
+        "**/ProjectSettings": true,
+        "**/Temp": true,
+        "**/*.vs": true,
+        "**/*.csproj": true,
+        "**/*.sln": true,
+    }
+}
+        
+        
+  
