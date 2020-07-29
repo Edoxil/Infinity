@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 
@@ -10,10 +11,15 @@ public class TargetPanel : MonoBehaviour
    void Awake()
     {
         Messenger<Transform>.AddListener(GameEvent.TARGET_SELECTED, OnTargetSelected); 
+        Messenger.AddListener(GameEvent.TARGET_UNSELECTED, Unselect); 
     }
+
+   
+
     void OnDestroy()
     {
-        Messenger<Transform>.RemoveListener(GameEvent.TARGET_SELECTED, OnTargetSelected); 
+        Messenger<Transform>.RemoveListener(GameEvent.TARGET_SELECTED, OnTargetSelected);
+        Messenger.RemoveListener(GameEvent.TARGET_UNSELECTED, Unselect);
     }
 
     void Start()
@@ -31,8 +37,11 @@ public class TargetPanel : MonoBehaviour
         }
         Open();
     }
-       
 
+    private void Unselect()
+    {
+        gameObject.SetActive(false);
+    }
 
 
     public void Open()
