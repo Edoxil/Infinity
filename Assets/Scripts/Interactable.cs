@@ -6,6 +6,12 @@ using UnityEngine;
 public class Interactable : MonoBehaviour
 {
     private Stats _stats;
+
+    private void OnDestroy()
+    {
+        Messenger<Transform>.Broadcast(GameEvent.TRANSFORM_DESTROYED, gameObject.transform);
+    }
+
     void Start()
     {
         _stats = GetComponent<Stats>();

@@ -11,16 +11,18 @@ public class TargetPanel : MonoBehaviour
    void Awake()
     {
         Messenger<Transform>.AddListener(GameEvent.TARGET_SELECTED, OnTargetSelected); 
-        Messenger.AddListener(GameEvent.TARGET_UNSELECTED, Unselect); 
+        Messenger.AddListener(GameEvent.TARGET_UNSELECTED, Unselect);
+        Messenger<Transform>.AddListener(GameEvent.TRANSFORM_DESTROYED, HideIfActive);
     }
-
-   
-
     void OnDestroy()
     {
         Messenger<Transform>.RemoveListener(GameEvent.TARGET_SELECTED, OnTargetSelected);
         Messenger.RemoveListener(GameEvent.TARGET_UNSELECTED, Unselect);
+        Messenger<Transform>.RemoveListener(GameEvent.TRANSFORM_DESTROYED, HideIfActive);
     }
+
+  
+
 
     void Start()
     {
@@ -54,4 +56,11 @@ public class TargetPanel : MonoBehaviour
         gameObject.SetActive(false); 
     }
 
+    private void HideIfActive(Transform transform)
+    {
+        if (!isActiveAndEnabled)
+            return;
+        else
+            gameObject.SetActive(false);
+    }
 }

@@ -1,26 +1,32 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class TargetHealthBar : MonoBehaviour
 {
-    [SerializeField] private Transform _target;
+   
+    private Transform _target;
     private Stats _stats;
     private Slider _healthBarFiller;
     private Camera _camera;
+    private float _offsetY = 1.5f;
 
     private void Awake()
     {
         Messenger<Transform>.AddListener(GameEvent.TARGET_SELECTED, Select);
         Messenger.AddListener(GameEvent.TARGET_UNSELECTED, Unselect);
+        Messenger<Transform>.AddListener(GameEvent.TRANSFORM_DESTROYED, HideIfActive);
     }
+
+   
+
     private void OnDestroy()
     {
         Messenger<Transform>.RemoveListener(GameEvent.TARGET_SELECTED, Select);
         Messenger.RemoveListener(GameEvent.TARGET_UNSELECTED, Unselect);
+        Messenger<Transform>.RemoveListener(GameEvent.TRANSFORM_DESTROYED, HideIfActive);
+
     }
 
   
@@ -38,6 +44,8 @@ public class TargetHealthBar : MonoBehaviour
     private void LateUpdate()
     {
         gameObject.transform.LookAt(_camera.transform);
+        Vector3 newPos = new Vector3(_target.position.x, _target.position.y + _offsetY, _target.position.z);
+        transform.position = newPos;
     }
 
     
@@ -62,8 +70,12 @@ public class TargetHealthBar : MonoBehaviour
     }
     private void Select(Transform target)
     {
-        if(_target == target)
+       
+        if(target.TryGetComponent(out Stats stats))
         {
+            _target = target;
+            
+         
             UpdateHealthBar();
             Open();
         }
@@ -72,9 +84,19 @@ public class TargetHealthBar : MonoBehaviour
             Unselect();
         }
     }
+
     private void Unselect()
     {
         Close();
+    }
+
+    private void HideIfActive(Transform transform)
+    {
+        if (!isActiveAndEnabled) return;
+        if(transform == _target)
+        {
+            Unselect();
+        }
     }
 }
        
