@@ -6,13 +6,13 @@ using UnityEngine.UI;
 
 public class PlayerPanel : MonoBehaviour
 {
-    [SerializeField] private Stats _playerStats;
-    [SerializeField] private Text _name; 
-    [SerializeField] private Text _lvl;
-    [SerializeField] private Text _HPstring;
-    [SerializeField] private Text _MPstring;
-    [SerializeField] private Slider _healthBarFiller;
-    [SerializeField] private Slider _manaBarFiller;
+    [SerializeField] private Stats _playerStats = null;
+    [SerializeField] private Text _name = null; 
+    [SerializeField] private Text _lvl = null;
+    [SerializeField] private Text _HPstring = null;
+    [SerializeField] private Text _MPstring = null;
+    [SerializeField] private Slider _healthBarFiller = null;
+    [SerializeField] private Slider _manaBarFiller = null;
 
     private void Start()
     {

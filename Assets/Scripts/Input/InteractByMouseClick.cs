@@ -24,8 +24,7 @@ public class InteractByMouseClick : MonoBehaviour
             {
                 Transform newTarget;
                 newTarget = hit.transform;
-
-                if (newTarget.TryGetComponent(out Interactable target))
+                if (newTarget.TryGetComponent(out Interactable _))
                 {
                     Messenger<Transform>.Broadcast(GameEvent.TARGET_SELECTED, newTarget);
                 }

@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class KeyboardInput : MonoBehaviour
 {
-    public NavMeshAgent _agent;
+    
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.Escape))
@@ -16,9 +16,7 @@ public class KeyboardInput : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            _agent.stoppingDistance = 0f;
-            _agent.Stop(true);
-            _agent.Resume();
+          
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
 
@@ -12,32 +11,45 @@ public class MoveByMouseClick : MonoBehaviour
     private Vector3 _positionToMove;
 
     private Transform _currentTarget;
-
+    private float _radius = 3.5f;
 
     [SerializeField] private GameObject _destinationMark = null;
     private float _markOffsetY = 0.1f;
 
-    private float _distanceToTarget=0f;
+    private float _distanceToTarget = -1f;
     private float _rotationSpeed = 5f;
-    private float _stopDistance=2.5f;
+
+    private AgentState State = AgentState.Stop;
+    private enum AgentState
+    {
+        Move,
+        Chase,
+        Stop
+    }
 
 
 
     private void Awake()
     {
         Messenger.AddListener(GameEvent.TARGET_UNSELECTED, Unselect);
+        Messenger<Transform>.AddListener(GameEvent.TARGET_SELECTED, Select);
     }
     private void OnDestroy()
     {
         Messenger.RemoveListener(GameEvent.TARGET_UNSELECTED, Unselect);
+        Messenger<Transform>.RemoveListener(GameEvent.TARGET_SELECTED, Select);
     }
-       
+
+
+
+
 
 
     void Start()
     {
         _camera = Camera.main;
         _agent = GetComponent<NavMeshAgent>();
+
     }
     void Update()
     {
@@ -46,61 +58,62 @@ public class MoveByMouseClick : MonoBehaviour
         {
             RaycastHit hit;
             Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
-           
+
 
             if (Physics.Raycast(ray, out hit))
             {
                 Transform newTarget = hit.transform;
 
                 _positionToMove = hit.point;
-                
 
-                if (newTarget == _currentTarget)
+                if (_currentTarget == newTarget)
                 {
-                    // move to interactable object based on his radius
-                    MoveToPosition(_stopDistance);
-
-                    
-                }
-
-                if (newTarget.TryGetComponent(out Interactable interact))
-                {
-                    _currentTarget = newTarget;
                     CalculateDistanceToTarget();
+                    State = AgentState.Chase;
                 }
                 else
                 {
-                    MoveToPosition();
-                    _distanceToTarget = 0f;
+                    _distanceToTarget = -1f;
+                    State = AgentState.Move;
                 }
 
+                MoveToPosition();
             }
         }
 
-
-
-                    
-
-
-        if(_distanceToTarget !=0 && _distanceToTarget <2.5f )
+        if (_currentTarget != null && State == AgentState.Chase)
         {
-            
+            _positionToMove = _currentTarget.position;
+            MoveToPosition();
+        }
+    }
+
+       
+
+    private void LateUpdate()
+    {
+        if (_distanceToTarget > 0 && _distanceToTarget < _radius)
+        {
+
             RotateTowards(_currentTarget);
             _destinationMark.gameObject.SetActive(false);
-            
+
         }
+
+        
+
         if (_agent.transform.position.x == _destinationMark.transform.position.x)
         {
             _destinationMark.gameObject.SetActive(false);
+            State = AgentState.Stop;
         }
-                    
-    }
 
+    }
     private void CalculateDistanceToTarget()
     {
-        _distanceToTarget = Vector3.Distance(transform.position,_currentTarget.position);
+        _distanceToTarget = Vector3.Distance(transform.position, _currentTarget.position);
     }
-        
+
     private void RotateTowards(Transform target)
     {
         if (target == null) return;
@@ -116,82 +129,26 @@ public class MoveByMouseClick : MonoBehaviour
         _currentTarget = null;
     }
 
-   
-
-
-
-
-
-
-
-  
-    private void MoveToPosition(float stopingDistance = 0f)
+    private void Select(Transform target)
     {
-        _agent.stoppingDistance = stopingDistance;
+
+        _currentTarget = target;
+
+    }
+    private void MoveToPosition()
+    {
+
         _agent.SetDestination(_positionToMove);
         SetEndpointMark();
     }
-
     private void SetEndpointMark()
     {
-
         Vector3 destinationPosition = new Vector3(_positionToMove.x, _markOffsetY, _positionToMove.z);
-
         _destinationMark.transform.position = destinationPosition;
         _destinationMark.gameObject.SetActive(true);
     }
+
 }
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
