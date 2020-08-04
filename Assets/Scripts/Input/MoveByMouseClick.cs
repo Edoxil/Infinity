@@ -6,10 +6,12 @@ using UnityEngine.EventSystems;
 [RequireComponent(typeof(NavMeshAgent))]
 public class MoveByMouseClick : MonoBehaviour
 {
+    
     private Camera _camera;
     private NavMeshAgent _agent;
     private Vector3 _positionToMove;
 
+    private Transform _thisTransform;
     private Transform _currentTarget;
     private float _radius = 3.5f;
 
@@ -26,6 +28,7 @@ public class MoveByMouseClick : MonoBehaviour
         Chase,
         Stop
     }
+
 
 
 
@@ -49,8 +52,9 @@ public class MoveByMouseClick : MonoBehaviour
     {
         _camera = Camera.main;
         _agent = GetComponent<NavMeshAgent>();
-
+        _thisTransform = GetComponent<Transform>();
     }
+
     void Update()
     {
 
@@ -77,18 +81,18 @@ public class MoveByMouseClick : MonoBehaviour
                     State = AgentState.Move;
                 }
 
-                MoveToPosition();
+                MoveToPosition(_positionToMove);
             }
         }
 
         if (_currentTarget != null && State == AgentState.Chase)
         {
             _positionToMove = _currentTarget.position;
-            MoveToPosition();
+            MoveToPosition(_positionToMove);
         }
     }
 
-       
+
 
     private void LateUpdate()
     {
@@ -100,7 +104,7 @@ public class MoveByMouseClick : MonoBehaviour
 
         }
 
-        
+
 
         if (_agent.transform.position.x == _destinationMark.transform.position.x)
         {
@@ -108,19 +112,20 @@ public class MoveByMouseClick : MonoBehaviour
             State = AgentState.Stop;
         }
 
+
     }
     private void CalculateDistanceToTarget()
     {
-        _distanceToTarget = Vector3.Distance(transform.position, _currentTarget.position);
+        _distanceToTarget = Vector3.Distance(_thisTransform.position, _currentTarget.position);
     }
 
     private void RotateTowards(Transform target)
     {
         if (target == null) return;
 
-        Vector3 direction = (target.position - transform.position).normalized;
+        Vector3 direction = (target.position - _thisTransform.position).normalized; 
         Quaternion lookRotation = Quaternion.LookRotation(direction);
-        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * _rotationSpeed);
+        _thisTransform.rotation = Quaternion.Slerp(_thisTransform.rotation, lookRotation, Time.deltaTime * _rotationSpeed);
 
     }
 
@@ -129,16 +134,17 @@ public class MoveByMouseClick : MonoBehaviour
         _currentTarget = null;
     }
 
+    
     private void Select(Transform target)
     {
 
         _currentTarget = target;
 
     }
-    private void MoveToPosition()
+    public void MoveToPosition(Vector3 position)
     {
 
-        _agent.SetDestination(_positionToMove);
+        _agent.SetDestination(position);
         SetEndpointMark();
     }
     private void SetEndpointMark()

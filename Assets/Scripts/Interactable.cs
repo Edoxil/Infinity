@@ -6,20 +6,19 @@ using UnityEngine;
 public class Interactable : MonoBehaviour
 {
     private Stats _stats;
+    private Transform _thisTransform;
 
     private void OnDestroy()
     {
-        Messenger<Transform>.Broadcast(GameEvent.TRANSFORM_DESTROYED, gameObject.transform);
+        Messenger<Transform>.Broadcast(GameEvent.TRANSFORM_DESTROYED, _thisTransform);
     }
 
     void Start()
     {
         _stats = GetComponent<Stats>();
+        _thisTransform = GetComponent<Transform>();
     }
 
     
-    void Update()
-    {
-        
-    }
+  
 }

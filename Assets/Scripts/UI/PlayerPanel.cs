@@ -31,7 +31,7 @@ public class PlayerPanel : MonoBehaviour
     private void Update()
     {
         // убрать из апдейта когда будет рассылка по ивенту PLATER_STATS_CHANGED
-        UpdatePlayerPanel();
+       // UpdatePlayerPanel();
        
     }
     private void UpdatePlayerPanel()

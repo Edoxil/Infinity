@@ -17,6 +17,7 @@ public class TargetHealthBar : MonoBehaviour
         Messenger<Transform>.AddListener(GameEvent.TARGET_SELECTED, Select);
         Messenger.AddListener(GameEvent.TARGET_UNSELECTED, Unselect);
         Messenger<Transform>.AddListener(GameEvent.TRANSFORM_DESTROYED, HideIfActive);
+        
     }
 
    
@@ -29,9 +30,12 @@ public class TargetHealthBar : MonoBehaviour
 
     }
 
-  
 
-   
+    private void Update()
+    {
+        UpdateHealthBar();
+    }
+
 
     void Start()
     {

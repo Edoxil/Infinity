@@ -1,14 +1,15 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class InteractByMouseClick : MonoBehaviour
+public class MouseClickInput : MonoBehaviour
 {
     private Camera _camera;
-
+    private CharacterMotor _motor;
 
     void Start()
     {
         _camera = Camera.main;
+        _motor = GetComponent<CharacterMotor>();
     }
 
 
@@ -28,7 +29,12 @@ public class InteractByMouseClick : MonoBehaviour
                 {
                     Messenger<Transform>.Broadcast(GameEvent.TARGET_SELECTED, newTarget);
                 }
-
+                _motor.Move(hit.point);
+                
+                
+               
+                    
+                
             }
         }
     }
