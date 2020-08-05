@@ -13,7 +13,7 @@ public class Enemy : MonoBehaviour
     bool flag = true;
 
     private Transform _target;
-    private Stats _targetStats;
+    private CharacterStats _targetStats;
 
 
     private State _state = State.Peace;
@@ -64,14 +64,14 @@ public class Enemy : MonoBehaviour
         {
             _state = State.Battle;
             _target = other.transform;
-            _targetStats = _target.GetComponent<Stats>();
+            _targetStats = _target.GetComponent<CharacterStats>();
         }
     }
 
     private void Attack(int dmgAmaunt)
     {
-        _targetStats.currentHP -= dmgAmaunt;
-        Messenger.Broadcast(GameEvent.PLAYER_STATS_CHANGED);
+        //_targetStats.currentHP -= dmgAmaunt;
+        //Messenger.Broadcast(GameEvent.PLAYER_STATS_CHANGED);
     }
 
     private void OnTriggerExit(Collider other)

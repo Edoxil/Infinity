@@ -7,7 +7,7 @@ public class TargetHealthBar : MonoBehaviour
 {
    
     private Transform _target;
-    private Stats _stats;
+    private CharacterStats _stats;
     private Slider _healthBarFiller;
     private Camera _camera;
     private float _offsetY = 1.5f;
@@ -57,9 +57,9 @@ public class TargetHealthBar : MonoBehaviour
 
     private void UpdateHealthBar()
     {
-        _stats = _target.GetComponent<Stats>();
-        _healthBarFiller.maxValue = _stats.maxHP;
-        _healthBarFiller.value = _stats.currentHP; 
+        _stats = _target.GetComponent<CharacterStats>();
+        _healthBarFiller.maxValue = _stats.maxHP.GetValue();
+        _healthBarFiller.value = _stats.currentHP.GetValue(); 
     }
 
 
@@ -75,7 +75,7 @@ public class TargetHealthBar : MonoBehaviour
     private void Select(Transform target)
     {
        
-        if(target.TryGetComponent(out Stats stats))
+        if(target.TryGetComponent(out CharacterStats stats))
         {
             _target = target;
             

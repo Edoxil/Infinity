@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using UnityEditorInternal;
 using UnityEngine;
 
-[RequireComponent(typeof(Stats))]
+[RequireComponent(typeof(CharacterStats))]
 public class Player : MonoBehaviour
 {
-    private Stats _stats;
-    private Stats _targetStats;
+    private CharacterStats _stats;
+    private CharacterStats _targetStats;
     private Transform _transform;
     private Transform _target;
     private State _state = State.Peace;
@@ -24,7 +24,7 @@ public class Player : MonoBehaviour
     }
     void Start()
     {
-        _stats = GetComponent<Stats>();
+        _stats = GetComponent<CharacterStats>();
         _transform = GetComponent<Transform>();
        
     }
@@ -62,9 +62,9 @@ public class Player : MonoBehaviour
     {
         if(_attackCooldown<=0f)
         {
-            _targetStats.currentHP -= dmgAmaunt;
-            _attackCooldown = 1 / _attackSpeed;
-            Debug.Log(dmgAmaunt);
+            //_targetStats.currentHP -= dmgAmaunt;
+            //_attackCooldown = 1 / _attackSpeed;
+            //Debug.Log(dmgAmaunt);
         }
         
     }
@@ -87,7 +87,7 @@ public class Player : MonoBehaviour
     private void Select(Transform target)
     {
         _target = target;
-        _targetStats = _target.GetComponent<Stats>();
+        _targetStats = _target.GetComponent<CharacterStats>();
     }
     private void Unselect()
     {

@@ -33,7 +33,7 @@ public class TargetPanel : MonoBehaviour
 
     private void OnTargetSelected(Transform target)
     {
-        if(target.TryGetComponent(out Stats stats))
+        if(target.TryGetComponent(out CharacterStats stats))
         {
             _text.text = stats.name;
         }

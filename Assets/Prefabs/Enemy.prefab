@@ -17,7 +17,6 @@ GameObject:
   - component: {fileID: 1926404912185467089}
   - component: {fileID: 1451554490}
   - component: {fileID: 1451554491}
-  - component: {fileID: 1338688343488188222}
   m_Layer: 8
   m_Name: Enemy
   m_TagString: Enemy
@@ -62,6 +61,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -86,6 +86,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!136 &1228229308356461426
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -124,12 +125,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97b7bf263a70a5648beedfb9d8a5cbad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: Wolf
-  level: 1
-  currentHP: 50
-  maxHP: 50
-  currentMP: 20
-  maxMP: 20
 --- !u!54 &1926404912185467089
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -182,16 +177,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   start: {x: 0, y: 0, z: 0}
   end: {x: 0, y: 0, z: 0}
---- !u!65 &1338688343488188222
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1228229308356461427}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 3, y: 2, z: 3}
-  m_Center: {x: 0, y: 0, z: 0}

@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Stats))]
+[RequireComponent(typeof(CharacterStats))]
 public class Interactable : MonoBehaviour
 {
-    private Stats _stats;
+    private CharacterStats _stats;
     private Transform _thisTransform;
 
     private void OnDestroy()
@@ -15,7 +15,7 @@ public class Interactable : MonoBehaviour
 
     void Start()
     {
-        _stats = GetComponent<Stats>();
+        _stats = GetComponent<CharacterStats>();
         _thisTransform = GetComponent<Transform>();
     }
 
