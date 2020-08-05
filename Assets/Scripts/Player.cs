@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
     private Transform _target;
     private State _state = State.Peace;
 
-    private MoveByMouseClick _motor;
+    
     private float _attackSpeed= 1f;
     private float _attackCooldown = 0f;
 
@@ -26,7 +26,7 @@ public class Player : MonoBehaviour
     {
         _stats = GetComponent<Stats>();
         _transform = GetComponent<Transform>();
-        _motor = GetComponent<MoveByMouseClick>();
+       
     }
 
     private void Awake()
@@ -53,7 +53,7 @@ public class Player : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Alpha1))
         {
            
-            _motor.MoveToPosition(_target.transform.position);
+           
         }
         
     }

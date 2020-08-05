@@ -25,20 +25,32 @@ public class MouseClickInput : MonoBehaviour
             {
                 Transform newTarget;
                 newTarget = hit.transform;
+
+                if(newTarget == _motor._currentTarget)
+                {
+                    _motor.state = CharacterMotor.State.Chase;
+                }
+                else
+                {
+                    _motor.state = CharacterMotor.State.Default;
+                    _motor.Move(hit.point);
+                }
+
                 if (newTarget.TryGetComponent(out Interactable _))
                 {
                     Messenger<Transform>.Broadcast(GameEvent.TARGET_SELECTED, newTarget);
                 }
-                _motor.Move(hit.point);
+
+            }
+        }
+    }
+}
+                
                 
                 
                
                     
                 
-            }
-        }
-    }
-}
 
 
 
