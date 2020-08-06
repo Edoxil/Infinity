@@ -1,11 +1,10 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 
 public class TargetHealthBar : MonoBehaviour
 {
-   
+
     private Transform _target;
     private CharacterStats _stats;
     private Slider _healthBarFiller;
@@ -17,24 +16,23 @@ public class TargetHealthBar : MonoBehaviour
         Messenger<Transform>.AddListener(GameEvent.TARGET_SELECTED, Select);
         Messenger.AddListener(GameEvent.TARGET_UNSELECTED, Unselect);
         Messenger<Transform>.AddListener(GameEvent.TRANSFORM_DESTROYED, HideIfActive);
-        
+        Messenger.AddListener(GameEvent.STAT_CHANGED, UpdateHealthBar);
+
     }
 
-   
+
 
     private void OnDestroy()
     {
         Messenger<Transform>.RemoveListener(GameEvent.TARGET_SELECTED, Select);
         Messenger.RemoveListener(GameEvent.TARGET_UNSELECTED, Unselect);
         Messenger<Transform>.RemoveListener(GameEvent.TRANSFORM_DESTROYED, HideIfActive);
+        Messenger.RemoveListener(GameEvent.STAT_CHANGED, UpdateHealthBar);
 
     }
 
 
-    private void Update()
-    {
-        UpdateHealthBar();
-    }
+
 
 
     void Start()
@@ -52,14 +50,14 @@ public class TargetHealthBar : MonoBehaviour
         transform.position = newPos;
     }
 
-    
+
 
 
     private void UpdateHealthBar()
     {
         _stats = _target.GetComponent<CharacterStats>();
         _healthBarFiller.maxValue = _stats.maxHP.GetValue();
-        _healthBarFiller.value = _stats.currentHP.GetValue(); 
+        _healthBarFiller.value = _stats.currentHP.GetValue();
     }
 
 
@@ -74,12 +72,12 @@ public class TargetHealthBar : MonoBehaviour
     }
     private void Select(Transform target)
     {
-       
-        if(target.TryGetComponent(out CharacterStats stats))
+
+        if (target.TryGetComponent(out CharacterStats stats))
         {
             _target = target;
-            
-         
+
+
             UpdateHealthBar();
             Open();
         }
@@ -97,15 +95,15 @@ public class TargetHealthBar : MonoBehaviour
     private void HideIfActive(Transform transform)
     {
         if (!isActiveAndEnabled) return;
-        if(transform == _target)
+        if (transform == _target)
         {
             Unselect();
         }
     }
 }
-       
-        
 
-        
-        
-        
+
+
+
+
+

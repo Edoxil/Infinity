@@ -6,18 +6,19 @@ using UnityEngine;
 public class CharacterStats :MonoBehaviour
 {
     public new string name;
+    
     public Stat level;
-    [Space()]
-    public Stat currentHP;
+    
     public Stat maxHP;
-    [Space()]
-    public Stat currentMP;
+    public HealthPoints currentHP;
+    
     public Stat maxMP;
-    [Space()]
+    public Stat currentMP;
+  
     public Stat attack;
     public Stat defense;
 
-
+    public Stat attackspeed;
 }
 
 

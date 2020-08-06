@@ -894,11 +894,11 @@ GameObject:
   - component: {fileID: 647485791}
   - component: {fileID: 647485789}
   - component: {fileID: 647485792}
-  - component: {fileID: 647485790}
   - component: {fileID: 647485793}
   - component: {fileID: 647485794}
   - component: {fileID: 647485796}
   - component: {fileID: 647485788}
+  - component: {fileID: 647485790}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -1034,18 +1034,20 @@ MonoBehaviour:
   name: Edoxil
   level:
     _value: 1
-  currentHP:
-    _value: 30
   maxHP:
     _value: 50
-  currentMP:
+  currentHP:
     _value: 30
   maxMP:
+    _value: 30
+  currentMP:
     _value: 30
   attack:
     _value: 5
   defense:
     _value: 3
+  attackspeed:
+    _value: 1
 --- !u!136 &647485791
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1621,7 +1623,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 748349576}
-  m_LocalRotation: {x: 0.38285655, y: 0.000000022479478, z: -0.000000009316239, w: 0.92380786}
+  m_LocalRotation: {x: 0.38285655, y: -0.000000022479478, z: 0.000000009316239, w: 0.92380786}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -3837,7 +3839,7 @@ PrefabInstance:
     - target: {fileID: 1228229308356461438, guid: 1e77f8e286a0418469b5ad4e16c2e938,
         type: 3}
       propertyPath: maxHP._value
-      value: 50
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 1228229308356461438, guid: 1e77f8e286a0418469b5ad4e16c2e938,
         type: 3}
@@ -3858,6 +3860,11 @@ PrefabInstance:
         type: 3}
       propertyPath: defense._value
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1228229308356461438, guid: 1e77f8e286a0418469b5ad4e16c2e938,
+        type: 3}
+      propertyPath: attackspeed._value
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1228229308356461439, guid: 1e77f8e286a0418469b5ad4e16c2e938,
         type: 3}

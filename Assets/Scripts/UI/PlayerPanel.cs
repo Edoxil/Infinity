@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerPanel : MonoBehaviour
 {
     [SerializeField] private CharacterStats _playerStats = null;
-    [SerializeField] private Text _name = null; 
+    [SerializeField] private Text _name = null;
     [SerializeField] private Text _lvl = null;
     [SerializeField] private Text _HPstring = null;
     [SerializeField] private Text _MPstring = null;
@@ -21,18 +18,11 @@ public class PlayerPanel : MonoBehaviour
 
     private void Awake()
     {
-        Messenger.AddListener(GameEvent.PLAYER_STATS_CHANGED, UpdatePlayerPanel);
+        Messenger.AddListener(GameEvent.STAT_CHANGED, UpdatePlayerPanel);
     }
     private void OnDestroy()
     {
-        Messenger.RemoveListener(GameEvent.PLAYER_STATS_CHANGED, UpdatePlayerPanel);
-    }
-
-    private void Update()
-    {
-        // убрать из апдейта когда будет рассылка по ивенту PLATER_STATS_CHANGED
-       // UpdatePlayerPanel();
-       
+        Messenger.RemoveListener(GameEvent.STAT_CHANGED, UpdatePlayerPanel);
     }
     private void UpdatePlayerPanel()
     {
@@ -47,10 +37,6 @@ public class PlayerPanel : MonoBehaviour
         _healthBarFiller.value = _playerStats.currentHP.GetValue();
         _manaBarFiller.value = _playerStats.currentMP.GetValue();
     }
-        
-   
-
-  
     public void OnSelfSelected()
     {
         Transform target = _playerStats.gameObject.transform;
@@ -58,3 +44,10 @@ public class PlayerPanel : MonoBehaviour
     }
 
 }
+
+
+
+
+
+
+

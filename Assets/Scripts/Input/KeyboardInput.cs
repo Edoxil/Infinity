@@ -14,9 +14,6 @@ public class KeyboardInput : MonoBehaviour
             Messenger.Broadcast(GameEvent.TARGET_UNSELECTED);
         }
 
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-          
-        }
+      
     }
 }

@@ -1,44 +1,52 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using TMPro;
+﻿using System;
+using UnityEditor.Experimental;
 using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(CharacterStats))]
 public class Enemy : MonoBehaviour
 {
+    private NavMeshAgent _agent;
+    private Transform _target;
+    private CharacterStats _stats;
+
+    // tmp fields
     public Vector3 start;
     public Vector3 end;
-    private NavMeshAgent _agent;
     bool flag = true;
 
-    private Transform _target;
-    private CharacterStats _targetStats;
 
 
-    private State _state = State.Peace;
+   
 
-    private enum State
+    void Awake()
     {
-        Battle,
-        Peace
+        Messenger<HealthPoints>.AddListener(GameEvent.DIED, Die);
     }
 
+    void OnDestroy()
+    {
+        Messenger<HealthPoints>.RemoveListener(GameEvent.DIED, Die);
+    }
+   
 
     void Start()
     {
         _agent = GetComponent<NavMeshAgent>();
+        _stats = GetComponent<CharacterStats>();
+
         start = transform.position;
         end = transform.position;
         end.x += 15f;
     }
 
-    
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if(flag)
+            if (flag)
             {
                 _agent.SetDestination(end);
                 flag = false;
@@ -52,35 +60,19 @@ public class Enemy : MonoBehaviour
         }
 
 
-        if(Input.GetKeyDown(KeyCode.A) && _state==State.Battle)
-        {
-            Attack(5);
-        }
+        
     }
 
-    private void OnTriggerEnter(Collider other)
+
+
+    private void Die(HealthPoints healthPoints)
     {
-        if (other.CompareTag("Player"))
+        if(healthPoints==_stats.currentHP)
         {
-            _state = State.Battle;
-            _target = other.transform;
-            _targetStats = _target.GetComponent<CharacterStats>();
+            Destroy(gameObject);
         }
     }
-
-    private void Attack(int dmgAmaunt)
-    {
-        //_targetStats.currentHP -= dmgAmaunt;
-        //Messenger.Broadcast(GameEvent.PLAYER_STATS_CHANGED);
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            _state = State.Peace;
-            _target = null;
-            _targetStats = null;
-        }
-    }
+            
 }
+
+

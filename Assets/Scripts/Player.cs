@@ -9,23 +9,19 @@ public class Player : MonoBehaviour
 {
     private CharacterStats _stats;
     private CharacterStats _targetStats;
-    private Transform _transform;
+    private Transform _thisTransform;
     private Transform _target;
-    private State _state = State.Peace;
+    
 
     
-    private float _attackSpeed= 1f;
+    
     private float _attackCooldown = 0f;
-
-    private enum State
-    {
-        Battle,
-        Peace
-    }
+    private bool flag = false;
+    
     void Start()
     {
         _stats = GetComponent<CharacterStats>();
-        _transform = GetComponent<Transform>();
+        _thisTransform = GetComponent<Transform>();
        
     }
 
@@ -33,27 +29,42 @@ public class Player : MonoBehaviour
     {
         Messenger<Transform>.AddListener(GameEvent.TARGET_SELECTED, Select);
         Messenger.AddListener(GameEvent.TARGET_UNSELECTED, Unselect);
+        Messenger<HealthPoints>.AddListener(GameEvent.DIED, Die);
     }
+
+   
+
     private void OnDestroy()
     {
         Messenger<Transform>.RemoveListener(GameEvent.TARGET_SELECTED, Select);
         Messenger.RemoveListener(GameEvent.TARGET_UNSELECTED, Unselect);
+        Messenger<HealthPoints>.RemoveListener(GameEvent.DIED, Die);
     }
 
 
     void Update()
     {
 
-        
-        if(_state==State.Battle)
+        _attackCooldown -= Time.deltaTime;
+
+        if (Input.GetKeyDown(KeyCode.A))
         {
-            _attackCooldown -= Time.deltaTime;
-            //Attack(2);
+
+            if (flag)
+            {
+               
+                flag = false;
+            }
+            else
+            {
+                
+                flag = true;
+            }
         }
-        if(Input.GetKeyDown(KeyCode.Alpha1))
+
+        if (flag)
         {
-           
-           
+            Attack(_stats.attack.GetValue());
         }
         
     }
@@ -62,28 +73,17 @@ public class Player : MonoBehaviour
     {
         if(_attackCooldown<=0f)
         {
-            //_targetStats.currentHP -= dmgAmaunt;
-            //_attackCooldown = 1 / _attackSpeed;
-            //Debug.Log(dmgAmaunt);
+            dmgAmaunt -= _targetStats.defense.GetValue();
+            int hp = _targetStats.currentHP.GetValue() - dmgAmaunt;
+
+            _targetStats.currentHP.SetValue(hp);
+            _attackCooldown = 1 / _stats.attackspeed.GetValue();
+            Debug.Log(_target + " take dmg " + dmgAmaunt);
         }
         
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Enemy"))
-        {
-            _state = State.Battle;
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Enemy"))
-        {
-            _state = State.Peace;
-        }
-    }
+  
     private void Select(Transform target)
     {
         _target = target;
@@ -93,5 +93,12 @@ public class Player : MonoBehaviour
     {
         _target = null;
         _targetStats = null;
+    }
+    private void Die(HealthPoints healthPoints)
+    {
+        if (healthPoints == _stats.currentHP)
+        {
+            Destroy(gameObject);
+        }
     }
 }
