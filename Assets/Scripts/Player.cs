@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditorInternal;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(CharacterStats))]
 public class Player : MonoBehaviour
@@ -11,18 +7,18 @@ public class Player : MonoBehaviour
     private CharacterStats _targetStats;
     private Transform _thisTransform;
     private Transform _target;
-    
 
-    
-    
+
+
+
     private float _attackCooldown = 0f;
     private bool flag = false;
-    
+
     void Start()
     {
         _stats = GetComponent<CharacterStats>();
         _thisTransform = GetComponent<Transform>();
-       
+
     }
 
     private void Awake()
@@ -32,7 +28,7 @@ public class Player : MonoBehaviour
         Messenger<HealthPoints>.AddListener(GameEvent.DIED, Die);
     }
 
-   
+
 
     private void OnDestroy()
     {
@@ -52,26 +48,26 @@ public class Player : MonoBehaviour
 
             if (flag)
             {
-               
+
                 flag = false;
             }
             else
             {
-                
+
                 flag = true;
             }
         }
 
-        if (flag)
+        if (flag && _target != null)
         {
             Attack(_stats.attack.GetValue());
         }
-        
+
     }
 
     private void Attack(int dmgAmaunt)
     {
-        if(_attackCooldown<=0f)
+        if (_attackCooldown <= 0f)
         {
             dmgAmaunt -= _targetStats.defense.GetValue();
             int hp = _targetStats.currentHP.GetValue() - dmgAmaunt;
@@ -80,10 +76,10 @@ public class Player : MonoBehaviour
             _attackCooldown = 1 / _stats.attackspeed.GetValue();
             Debug.Log(_target + " take dmg " + dmgAmaunt);
         }
-        
+
     }
 
-  
+
     private void Select(Transform target)
     {
         _target = target;

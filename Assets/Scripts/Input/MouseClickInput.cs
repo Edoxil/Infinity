@@ -36,7 +36,7 @@ public class MouseClickInput : MonoBehaviour
                     _motor.Move(hit.point);
                 }
 
-                if (newTarget.TryGetComponent(out Interactable _))
+                if (newTarget.TryGetComponent(out CharacterStats _))
                 {
                     Messenger<Transform>.Broadcast(GameEvent.TARGET_SELECTED, newTarget);
                 }

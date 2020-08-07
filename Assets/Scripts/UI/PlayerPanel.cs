@@ -11,10 +11,6 @@ public class PlayerPanel : MonoBehaviour
     [SerializeField] private Slider _healthBarFiller = null;
     [SerializeField] private Slider _manaBarFiller = null;
 
-    private void Start()
-    {
-        UpdatePlayerPanel();
-    }
 
     private void Awake()
     {
@@ -23,6 +19,10 @@ public class PlayerPanel : MonoBehaviour
     private void OnDestroy()
     {
         Messenger.RemoveListener(GameEvent.STAT_CHANGED, UpdatePlayerPanel);
+    }
+    private void Start()
+    {
+        UpdatePlayerPanel();
     }
     private void UpdatePlayerPanel()
     {

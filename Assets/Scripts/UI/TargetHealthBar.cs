@@ -15,8 +15,8 @@ public class TargetHealthBar : MonoBehaviour
     {
         Messenger<Transform>.AddListener(GameEvent.TARGET_SELECTED, Select);
         Messenger.AddListener(GameEvent.TARGET_UNSELECTED, Unselect);
-        Messenger<Transform>.AddListener(GameEvent.TRANSFORM_DESTROYED, HideIfActive);
         Messenger.AddListener(GameEvent.STAT_CHANGED, UpdateHealthBar);
+        Messenger<HealthPoints>.AddListener(GameEvent.DIED, HideIfActive); 
 
     }
 
@@ -26,8 +26,8 @@ public class TargetHealthBar : MonoBehaviour
     {
         Messenger<Transform>.RemoveListener(GameEvent.TARGET_SELECTED, Select);
         Messenger.RemoveListener(GameEvent.TARGET_UNSELECTED, Unselect);
-        Messenger<Transform>.RemoveListener(GameEvent.TRANSFORM_DESTROYED, HideIfActive);
         Messenger.RemoveListener(GameEvent.STAT_CHANGED, UpdateHealthBar);
+        Messenger<HealthPoints>.RemoveListener(GameEvent.DIED, HideIfActive);
 
     }
 
@@ -37,7 +37,7 @@ public class TargetHealthBar : MonoBehaviour
 
     void Start()
     {
-        
+
         _healthBarFiller = GetComponent<Slider>();
         _camera = Camera.main;
         gameObject.SetActive(false);
@@ -92,11 +92,12 @@ public class TargetHealthBar : MonoBehaviour
         Close();
     }
 
-    private void HideIfActive(Transform transform)
+    private void HideIfActive(HealthPoints healthPoints)
     {
         if (!isActiveAndEnabled) return;
-        if (transform == _target)
+        if (_stats.currentHP == healthPoints)
         {
+
             Unselect();
         }
     }
