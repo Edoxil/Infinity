@@ -12,6 +12,9 @@ public class CharacterMotor : MonoBehaviour
     private float _rotationRadius = 2.3f;
     [SerializeField] private GameObject _destinationMark = null;
     private float _markOffsetY = 0.1f;
+    [SerializeField]private Animator _animator;
+    private Vector3 _previousPos;
+
 
     public Transform _currentTarget;
 
@@ -40,6 +43,7 @@ public class CharacterMotor : MonoBehaviour
     {
         _thisTransform = GetComponent<Transform>();
         _agent = GetComponent<NavMeshAgent>();
+        _previousPos = _thisTransform.position;
     }
     private void Update()
     {
@@ -47,18 +51,39 @@ public class CharacterMotor : MonoBehaviour
         {
             RotateTowards(_currentTarget);
         }
+
+        if (_thisTransform.position != _previousPos)
+        {
+            _animator.SetBool("Walk", true);
+            ShowDestination();
+        }
+        else
+        {
+            _animator.SetBool("Walk", false);
+            HideDestination();
+        }
+
+        
     }
     private void LateUpdate()
     {
         SetStoppingDistance();
-        HideDestination();
+
         
-        if(_currentTarget!=null && state==State.Chase)
+        if (_currentTarget!=null && state==State.Chase)
         {
             Move(_currentTarget.position);
         }
-            
+        _previousPos = _thisTransform.position;
     }
+        
+        
+       
+       
+
+
+
+            
 
 
     private void Select(Transform target)
@@ -75,7 +100,7 @@ public class CharacterMotor : MonoBehaviour
         _destination = destination;
         _agent.SetDestination(_destination);
         
-        ShowDestination();
+        
     }
     private void RotateTowards(Transform target)
     {
@@ -103,8 +128,11 @@ public class CharacterMotor : MonoBehaviour
     private void HideDestination()
     {
        
-       if(_thisTransform.position.x == _destination.x)  
-       _destinationMark.gameObject.SetActive(false);
+       if(_thisTransform.position.x == _destination.x)
+       {
+       }
+           _destinationMark.gameObject.SetActive(false);
+            
     }
         
            

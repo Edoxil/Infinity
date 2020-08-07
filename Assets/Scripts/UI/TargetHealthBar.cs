@@ -9,7 +9,7 @@ public class TargetHealthBar : MonoBehaviour
     private CharacterStats _stats;
     private Slider _healthBarFiller;
     private Camera _camera;
-    private float _offsetY = 1.5f;
+    private float _offsetY = 3f;
 
     private void Awake()
     {
