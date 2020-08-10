@@ -38,46 +38,7 @@ public class Player : MonoBehaviour
     }
 
 
-    void Update()
-    {
-
-        _attackCooldown -= Time.deltaTime;
-
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-
-            if (flag)
-            {
-
-                flag = false;
-            }
-            else
-            {
-
-                flag = true;
-            }
-        }
-
-        if (flag && _target != null)
-        {
-            Attack(_stats.attack.GetValue());
-        }
-
-    }
-
-    private void Attack(int dmgAmaunt)
-    {
-        if (_attackCooldown <= 0f)
-        {
-            dmgAmaunt -= _targetStats.defense.GetValue();
-            int hp = _targetStats.currentHP.GetValue() - dmgAmaunt;
-
-            _targetStats.currentHP.SetValue(hp);
-            _attackCooldown = 1 / _stats.attackspeed.GetValue();
-            Debug.Log(_target + " take dmg " + dmgAmaunt);
-        }
-
-    }
+  
 
 
     private void Select(Transform target)
