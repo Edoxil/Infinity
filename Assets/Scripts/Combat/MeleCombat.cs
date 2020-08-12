@@ -25,14 +25,15 @@ public class MeleCombat : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.A))
         {
-            _animator.SetFloat("AttackSpeed", 2f);
-            
+            _animator.SetFloat("AttackSpeed", 1.5f);
+
         }
         _attackCooldown -= Time.deltaTime;
 
         if (_targetStats != null)
         {
             _animator.Play("Attack");
+            
             Attack(_playerStats.attack.GetValue());
             
         }
@@ -59,7 +60,7 @@ public class MeleCombat : MonoBehaviour
     {
         _textMesh.color = color;
         _textMesh.text = text;
-        
+        Instantiate(_floatingTextPrefab, _targetTransform.position, Quaternion.identity, _targetTransform);
     }
 
     private void OnTriggerEnter(Collider other)
