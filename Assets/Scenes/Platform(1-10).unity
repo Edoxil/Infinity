@@ -1627,7 +1627,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.4140753, y: -0.000000031323964, z: 0.000000014249474, w: 0.9102427}
+  m_LocalRotation: {x: 0.4140753, y: 0.000000031323967, z: -0.000000014249475, w: 0.9102427}
   m_LocalPosition: {x: 0, y: 23, z: -19}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -2350,6 +2350,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 1647963741}
+  _floatingTextPrefab: {fileID: 4442895012035465216, guid: 0ad345b363bc71b49a282ff4957f1ad6,
+    type: 3}
 --- !u!1 &1363083985
 GameObject:
   m_ObjectHideFlags: 0
@@ -3251,7 +3253,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: cc8c26c9a4a962d4a94cc617909b6dfd,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cc8c26c9a4a962d4a94cc617909b6dfd,
         type: 3}
@@ -3481,7 +3483,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2057423880}
-  m_LocalRotation: {x: 0.4140753, y: -0.000000015661977, z: 0.0000000071247355, w: 0.9102427}
+  m_LocalRotation: {x: 0.4140753, y: 0.000000015661985, z: -0.0000000071247377, w: 0.9102427}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -3555,7 +3557,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2100358491}
-  m_LocalRotation: {x: 0.3995527, y: -0.000000022306763, z: 0.000000009722513, w: 0.91671026}
+  m_LocalRotation: {x: 0.3995527, y: 0.00000002230677, z: -0.000000009722515, w: 0.91671026}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -3833,12 +3835,12 @@ PrefabInstance:
     - target: {fileID: 1228229308356461438, guid: 1e77f8e286a0418469b5ad4e16c2e938,
         type: 3}
       propertyPath: currentHP._value
-      value: 30
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 1228229308356461438, guid: 1e77f8e286a0418469b5ad4e16c2e938,
         type: 3}
       propertyPath: maxHP._value
-      value: 30
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 1228229308356461438, guid: 1e77f8e286a0418469b5ad4e16c2e938,
         type: 3}
