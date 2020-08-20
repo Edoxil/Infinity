@@ -12,13 +12,13 @@ public class CharacterMotor : MonoBehaviour
     private float _rotationRadius = 2.3f;
     [SerializeField] private GameObject _destinationMark = null;
     private float _markOffsetY = 0.1f;
-    [SerializeField]private Animator _animator;
+    [SerializeField] private Animator _animator;
     private Vector3 _previousPos;
-
-
-    public Transform _currentTarget;
-
+    private LineRenderer _lineRenderer;
     
+    public Transform _currentTarget;
+    
+
 
     public State state = State.Default;
     public enum State
@@ -26,8 +26,8 @@ public class CharacterMotor : MonoBehaviour
         Default,
         Chase
     }
-       
-       
+
+
 
     private void Awake()
     {
@@ -44,6 +44,13 @@ public class CharacterMotor : MonoBehaviour
         _thisTransform = GetComponent<Transform>();
         _agent = GetComponent<NavMeshAgent>();
         _previousPos = _thisTransform.position;
+        _lineRenderer = GetComponent<LineRenderer>();
+        //_lineRenderer.enabled = false;
+        _lineRenderer.startWidth = 0.15f;
+        _lineRenderer.endWidth = 0.15f;
+        _lineRenderer.positionCount = 0;
+
+        
     }
     private void Update()
     {
@@ -63,27 +70,32 @@ public class CharacterMotor : MonoBehaviour
             HideDestination();
         }
 
-        
+        if (_agent.hasPath)
+        {
+            
+            DrawPath();
+        }  
+
     }
     private void LateUpdate()
     {
         SetStoppingDistance();
 
-        
-        if (_currentTarget!=null && state==State.Chase)
+
+        if (_currentTarget != null && state == State.Chase)
         {
             Move(_currentTarget.position);
         }
         _previousPos = _thisTransform.position;
     }
-        
-        
-       
-       
 
 
 
-            
+
+
+
+
+
 
 
     private void Select(Transform target)
@@ -99,9 +111,12 @@ public class CharacterMotor : MonoBehaviour
         
         _destination = destination;
         _agent.SetDestination(_destination);
-        
-        
+
     }
+
+        
+
+ 
     private void RotateTowards(Transform target)
     {
         if (target == _thisTransform) return;
@@ -116,27 +131,51 @@ public class CharacterMotor : MonoBehaviour
     }
     private void SetStoppingDistance()
     {
-        if(state==State.Chase)
+        if (state == State.Chase)
         {
             _agent.stoppingDistance = 1.15f;
         }
-        if(state == State.Default)
+        if (state == State.Default)
         {
             _agent.stoppingDistance = 0f;
         }
     }
     private void HideDestination()
     {
-       
-       if(_thisTransform.position.x == _destination.x)
-       {
-       }
-           _destinationMark.gameObject.SetActive(false);
-            
+        _destinationMark.gameObject.SetActive(false);
+        
     }
+      
+
+
+
+    private void DrawPath()
+    {
         
-           
-        
+       
+        _lineRenderer.positionCount = _agent.path.corners.Length;
+        Vector3 startPosition = new Vector3(_thisTransform.position.x,
+                                            _thisTransform.position.y - 1f,
+                                            _thisTransform.position.z);
+        _lineRenderer.SetPosition(0, startPosition);
+
+        if(_agent.path.corners.Length<2)
+        {
+            return;
+        }
+
+        int cornerCount = _agent.path.corners.Length;
+
+        for (int i = 1; i < cornerCount; i++)
+        {
+            Vector3 pointPosition = new Vector3( _agent.path.corners[i].x,
+                                                 _agent.path.corners[i].y,
+                                                 _agent.path.corners[i].z);
+            _lineRenderer.SetPosition(i, pointPosition); 
+
+        }
+    }
+
  
     private void ShowDestination()
     {
@@ -144,6 +183,6 @@ public class CharacterMotor : MonoBehaviour
         _destinationMark.transform.position = markPosition;
         _destinationMark.gameObject.SetActive(true);
     }
-        
 
-}           
+
+}
